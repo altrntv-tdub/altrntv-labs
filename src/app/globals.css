@@ -1,26 +1,183 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0C0B09;
+  --surface: #14110E;
+  --surface-2: #1A1612;
+  --border: #221E18;
+  --border-2: #2D2820;
+  --fg: #EAE7E1;
+  --fg-2: #C9C5BD;
+  --muted: #8A857B;
+  --muted-2: #5A554B;
+  --accent: #D4541F;
+  --accent-soft: rgba(212, 84, 31, 0.10);
+  --accent-ink: #0C0B09;
+}
+
+html[data-theme="light"] {
+  --bg: #F8F5EE;
+  --surface: #EFECE3;
+  --surface-2: #E5E1D6;
+  --border: #D6D2C5;
+  --border-2: #BCB7A8;
+  --fg: #1B1812;
+  --fg-2: #38342B;
+  --muted: #6B6759;
+  --muted-2: #9A9588;
+  --accent: #D4541F;
+  --accent-soft: rgba(212, 84, 31, 0.10);
+  --accent-ink: #FFFFFF;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-2: var(--border-2);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --font-display: var(--font-newsreader);
+  --default-transition-duration: 300ms;
+  --default-transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.display {
+  font-family: var(--font-newsreader), ui-serif, Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "opsz" 36;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.eyebrow {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.serif {
+  font-family: var(--font-newsreader), ui-serif, Georgia, serif;
+}
+
+.nav-link {
+  color: var(--fg-2);
+  position: relative;
+  padding-bottom: 4px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--fg);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.link {
+  color: var(--fg-2);
+  border-bottom: 1px solid var(--border-2);
+  padding-bottom: 2px;
+}
+.link:hover {
+  color: var(--fg);
+  border-bottom-color: var(--accent);
+}
+
+.link-quiet {
+  color: var(--fg-2);
+}
+.link-quiet:hover {
+  color: var(--fg);
+}
+
+.link-accent {
+  color: var(--accent);
+}
+.link-accent:hover {
+  color: var(--accent);
+  opacity: 0.78;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 1px solid var(--accent);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.btn-primary:hover {
+  opacity: 0.86;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border-2);
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--fg-2);
+  color: var(--fg);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
