@@ -170,7 +170,7 @@ body {
 }
 
 .fade-in {
-  animation: fadeIn 0.4s ease both;
+  animation: fadeIn 0.7s ease both;
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
@@ -180,4 +180,15 @@ body {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
+}
+
+::view-transition-old(root) {
+  animation: 200ms ease-out both fadeOut;
+}
+::view-transition-new(root) {
+  animation: 300ms ease-out 100ms both fadeIn;
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
