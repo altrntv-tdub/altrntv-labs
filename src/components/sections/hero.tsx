@@ -117,12 +117,6 @@ function AssessmentScaffold() {
       <text x={W - padR} y={padT - 28} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize="10" fill="var(--muted)">
         / assessment scaffold
       </text>
-      <text x={padL - 14} y={padT - 28} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize="10" fill="var(--muted-2)">
-        ref
-      </text>
-      <text x={padL - 14} y={H - padB + 35} textAnchor="end" fontFamily="'JetBrains Mono', monospace" fontSize="10" fill="var(--muted-2)">
-        rev
-      </text>
       <text x={padL + 14} y={H - padB + 35} fontFamily="'JetBrains Mono', monospace" fontSize="10" fill="var(--muted)">
         v1.0 · fixed scope · {ROWS.length} questions
       </text>
