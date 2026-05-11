@@ -20,7 +20,7 @@ const issuers: Panel = {
     "The harder questions surfaced before the first serious allocator conversation",
     "A remediation path showing what to fix, what can remain open, and what should be sequenced first",
   ],
-  cta: "See the Issuer Assessment",
+  cta: "Learn more",
   href: "/services#issuer-assessment",
 };
 
@@ -34,7 +34,7 @@ const allocators: Panel = {
     "Sector context and comparable structures so the product is not evaluated in isolation",
     "The issuer questions to ask before conviction increases or capital is committed",
   ],
-  cta: "See the Product Assessment",
+  cta: "Learn more",
   href: "/services#product-assessment",
 };
 
