@@ -6,25 +6,19 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  // Note: using satori's default sans. Custom fonts can be re-added by
-  // bundling .ttf files in /public/fonts and reading them with fs at build.
-  const bg = "#0a0b0d";
-  const fg = "#e8e9eb";
-  const muted = "#8a8f98";
-  const border = "#1e2126";
-  const accent = "#c9a24a";
+  const bg = "#0C0B09";
+  const fg = "#EAE7E1";
+  const fg2 = "#C9C5BD";
+  const muted = "#8A857B";
+  const muted2 = "#5A554B";
+  const border = "#221E18";
+  const border2 = "#2D2820";
+  const accent = "#D4541F";
 
-  // Capital-flow diagram, scaled & positioned for the OG canvas
-  const D = { x: 920, y: 330 };
-  const satellites = [
-    { x: 1060, y: 180 },
-    { x: 1110, y: 320 },
-    { x: 1060, y: 480 },
-    { x: 940, y: 540 },
-    { x: 800, y: 510 },
-    { x: 780, y: 180 },
-    { x: 920, y: 150 },
-  ];
+  const ROWS = ["Structure", "Economics", "Liquidity", "Operations", "Distribution"];
+  const scaffoldLeft = 780;
+  const scaffoldTop = 110;
+  const rowGap = 88;
 
   return new ImageResponse(
     (
@@ -50,105 +44,141 @@ export default async function Image() {
           }}
         />
 
-        {/* Capital-flow diagram (static SVG) */}
-        <svg
-          width="1200"
-          height="630"
-          viewBox="0 0 1200 630"
-          style={{ position: "absolute", top: 0, left: 0 }}
-        >
-          {/* Pre-D progressive stages on the journey */}
-          {[
-            { x: 480, r: 3, op: 0.4 },
-            { x: 600, r: 5, op: 0.6 },
-            { x: 720, r: 8, op: 0.85 },
-          ].map((s, i) => (
-            <circle
-              key={`stage-${i}`}
-              cx={s.x}
-              cy={D.y}
-              r={s.r}
-              fill={bg}
-              stroke={muted}
-              strokeWidth={1}
-              opacity={s.op}
-            />
-          ))}
-          {/* Journey axis */}
-          <line
-            x1={480}
-            y1={D.y}
-            x2={D.x}
-            y2={D.y}
-            stroke={border}
-            strokeWidth={1}
-            opacity={0.7}
-          />
-          {/* Capital connection streams */}
-          {satellites.map((s, i) => (
-            <line
-              key={`l-${i}`}
-              x1={s.x}
-              y1={s.y}
-              x2={D.x}
-              y2={D.y}
-              stroke={border}
-              strokeWidth={1}
-              opacity={0.7}
-            />
-          ))}
-          {/* Satellite (capital pool) nodes */}
-          {satellites.map((s, i) => (
-            <g key={`s-${i}`}>
-              <circle
-                cx={s.x}
-                cy={s.y}
-                r={5}
-                fill={bg}
-                stroke={muted}
-                strokeWidth={1}
+        {/* Assessment scaffold rows */}
+        {ROWS.map((label, i) => {
+          const y = scaffoldTop + i * rowGap;
+          const isActive = i === 2;
+          return (
+            <div key={i} style={{ position: "absolute", display: "flex" }}>
+              {/* Row number */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: scaffoldLeft - 36,
+                  top: y - 7,
+                  fontSize: 11,
+                  fontFamily: "monospace",
+                  color: isActive ? fg2 : muted,
+                  display: "flex",
+                }}
+              >
+                {`0${i + 1}`}
+              </div>
+              {/* Row label */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: scaffoldLeft + 14,
+                  top: y - 22,
+                  fontSize: 13,
+                  fontFamily: "sans-serif",
+                  color: isActive ? fg : muted2,
+                  letterSpacing: "0.03em",
+                  display: "flex",
+                }}
+              >
+                {label}
+              </div>
+              {/* Horizontal line */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: scaffoldLeft,
+                  top: y,
+                  width: 360,
+                  height: 1,
+                  background: isActive ? fg2 : border,
+                  display: "flex",
+                }}
               />
-              <circle cx={s.x} cy={s.y} r={1.6} fill={muted} />
-            </g>
-          ))}
-          {/* Frozen-in-flight capital particles along each stream */}
-          {satellites.map((s, i) => {
-            const t = 0.35 + (i % 3) * 0.18;
-            const px = s.x + (D.x - s.x) * t;
-            const py = s.y + (D.y - s.y) * t;
-            return (
-              <circle key={`p-${i}`} cx={px} cy={py} r={3.2} fill={accent} />
-            );
-          })}
-          {/* Matured product node — halos + ring + center */}
-          <circle
-            cx={D.x}
-            cy={D.y}
-            r={48}
-            fill="none"
-            stroke={accent}
-            strokeWidth={1}
-            opacity={0.18}
-          />
-          <circle
-            cx={D.x}
-            cy={D.y}
-            r={32}
-            fill="none"
-            stroke={accent}
-            strokeWidth={1}
-            opacity={0.45}
-          />
-          <circle
-            cx={D.x}
-            cy={D.y}
-            r={22}
-            fill={bg}
-            stroke={accent}
-            strokeWidth={1.5}
-          />
-          <circle cx={D.x} cy={D.y} r={5} fill={accent} />
-        </svg>
+              {/* Checkmarks for completed rows */}
+              {i < 2 && (
+                <div
+                  style={{
+                    position: "absolute",
+                    left: scaffoldLeft + 330,
+                    top: y - 8,
+                    fontSize: 14,
+                    color: accent,
+                    opacity: 0.6,
+                    display: "flex",
+                  }}
+                >
+                  ✓
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {/* Vertical guide line */}
+        <div
+          style={{
+            position: "absolute",
+            left: scaffoldLeft,
+            top: scaffoldTop - 20,
+            width: 1,
+            height: rowGap * (ROWS.length - 1) + 40,
+            background: border2,
+            display: "flex",
+          }}
+        />
+
+        {/* Active row accent line */}
+        <div
+          style={{
+            position: "absolute",
+            left: scaffoldLeft - 12,
+            top: scaffoldTop + 2 * rowGap,
+            width: 384,
+            height: 1,
+            background: accent,
+            opacity: 0.18,
+            display: "flex",
+          }}
+        />
+        {/* Active row dot */}
+        <div
+          style={{
+            position: "absolute",
+            left: scaffoldLeft - 3,
+            top: scaffoldTop + 2 * rowGap - 3,
+            width: 6,
+            height: 6,
+            background: accent,
+            display: "flex",
+          }}
+        />
+
+        {/* Scaffold label */}
+        <div
+          style={{
+            position: "absolute",
+            right: 68,
+            top: scaffoldTop - 32,
+            fontSize: 10,
+            fontFamily: "monospace",
+            color: muted,
+            display: "flex",
+          }}
+        >
+          / assessment scaffold
+        </div>
+
+        {/* Version label */}
+        <div
+          style={{
+            position: "absolute",
+            left: scaffoldLeft + 14,
+            top: scaffoldTop + rowGap * (ROWS.length - 1) + 22,
+            fontSize: 10,
+            fontFamily: "monospace",
+            color: muted,
+            display: "flex",
+          }}
+        >
+          v1.0 · fixed scope · 5 questions
+        </div>
 
         {/* Content overlay */}
         <div
@@ -174,7 +204,7 @@ export default async function Image() {
             />
             <div
               style={{
-                  fontSize: 20,
+                fontSize: 20,
                 letterSpacing: "0.14em",
                 color: muted,
                 display: "flex",
@@ -189,18 +219,17 @@ export default async function Image() {
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 78,
+              fontSize: 72,
               lineHeight: 1.02,
               letterSpacing: "-0.02em",
               fontWeight: 500,
               color: fg,
-              maxWidth: 780,
+              maxWidth: 700,
             }}
           >
             <div style={{ display: "flex" }}>Independent</div>
             <div style={{ display: "flex" }}>assessments for</div>
-            <div style={{ display: "flex" }}>tokenized financial</div>
-            <div style={{ display: "flex" }}>products.</div>
+            <div style={{ display: "flex" }}>tokenized finance.</div>
           </div>
 
           {/* Bottom row */}
@@ -213,23 +242,24 @@ export default async function Image() {
           >
             <div
               style={{
-                  fontSize: 18,
-                color: muted,
-                letterSpacing: "0.04em",
+                fontSize: 14,
+                color: muted2,
+                letterSpacing: "0.06em",
                 display: "flex",
+                fontFamily: "monospace",
               }}
             >
-              {/* fixed-scope · independent · decision-grade */}
+              structure · economics · liquidity · operations · distribution
             </div>
             <div
               style={{
-                  fontSize: 16,
+                fontSize: 16,
                 color: accent,
                 letterSpacing: "0.14em",
                 display: "flex",
               }}
             >
-              altrntv.xyz
+              altrntv.io
             </div>
           </div>
         </div>
